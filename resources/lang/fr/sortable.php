@@ -12,10 +12,10 @@ return [
     */
 
     'errors' => [
-      'model' => 'The model is missing. Check if you have set the data-sortable-model attribute.',
-      'id'    => 'The ids are missing. Check if you have set the data-id attributes.'
+      'model' => 'Il manque le model. Verifiez que vous avez bien l\'attribut data-sortable-model.',
+      'id'    => 'Il manque les ids. Verifiez que vous avez bien mis les attributs data-id.'
     ],
 
-    'success' => 'The positions have been updated.'
+    'success' => 'La position a été modifiée.'
 
 ];
