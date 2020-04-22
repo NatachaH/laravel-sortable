@@ -1,0 +1,23 @@
+{
+    "name": "nh/sortable",
+    "description": "Make a Laravel model sortable.",
+    "license": "MIT",
+    "type": "library",
+    "author": {
+        "name": "Natacha Herth",
+        "email": "info@natachaherth.ch"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nh\\Sortable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nh\\Sortable\\SortableServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
