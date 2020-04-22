@@ -4,48 +4,94 @@
 |--------------------------------------------------------------------------
 |
 | Copyright © 2020 Natacha Herth, design & web development | https://www.natachaherth.ch/
-| Plugin: SortableJS - https://github.com/SortableJS/Sortable
 |
 */
 
-// Library
-import Sortable from 'sortablejs';
+window.SortableJs = require('sortablejs').default;
 
-// Get all .sortable
-var sortable = document.querySelectorAll('.sortable');
+// DYNAMIC MODULE
+(function() {
 
-// Init the Sortable to each .sortable
-Array.prototype.forEach.call(sortable, function(el, i) {
-   Sortable.create(el, {
-      animation: 150,
-      handle: '.drag',
-      onEnd: function (evt) {
-          var url   = '/sortable/update';
-          var model = el.getAttribute('data-sortable-model');
-          var ids   = getIds(el.children);
-          axios({
-              method: 'post',
-              url: url,
-              data: {
-                'model' : model,
-                'ids': ids
-              }
-          }).then((response)=>{
-              if(sortableSuccessCallback === 'function') sortableSuccessCallback(response);
-          }).catch((error)=>{
-              if(sortableErrorCallback === 'function') sortableErrorCallback(response);
-          });
-      }
+  // Define the module
+  this.Sortable = function(el,options = null) {
+
+      // Variables
+      this.el = null;
+
+      // Define option defaults
+      var defaults = {
+          successCallback: function(e){},
+          errorCallback: function(e){}
+      };
+
+      // Create options by extending defaults with the passed in arugments
+      var customOptions = (options && typeof options === "object" ? options : null );
+      this.options = this.setOption(defaults, options);
+
+      // Init variables and number of inputs
+      this.el = el ? el : '.sortable';
+      this.init();
+
+  }
+
+  //------  METHODS ------//
+
+  // Init
+  Sortable.prototype.init = function()
+  {
+
+    var sortableObject = this;
+
+    SortableJs.create(this.el, {
+       animation: 150,
+       handle: '.drag',
+       onEnd: function (evt) {
+           var url   = '/sortable/update';
+           var model = this.el.getAttribute('data-sortable-model');
+           var ids   = sortableObject.getIds(this.el.children);
+           axios({
+               method: 'post',
+               url: url,
+               data: {
+                 'model' : model,
+                 'ids': ids
+               }
+           }).then((response)=>{
+               sortableObject.options.successCallback(response);
+           }).catch((error)=>{
+               sortableObject.options.errorCallback(error);
+           });
+       }
 
     });
-});
+  }
 
-// Get all ids
-function getIds(items){
-  var ids = [];
-  Array.prototype.forEach.call(items, function(el, i) {
-    var id = el.getAttribute('data-id');
-    ids.push(id);
-  });
-  return ids;
-}
+  // SetOptions
+  Sortable.prototype.setOption = function(source, properties)
+  {
+      var property;
+      for (property in properties) {
+        if (properties.hasOwnProperty(property)) {
+          source[property] = properties[property];
+        }
+      }
+      return source;
+  }
+
+  // Get the ids in the new order
+  Sortable.prototype.getIds = function(items) {
+      var ids = [];
+      Array.prototype.forEach.call(items, function(el, i) {
+        var id = el.getAttribute('data-id');
+        ids.push(id);
+      });
+      return ids;
+  }
+
+}());
+
+// Init the Sortable to each .sortable-automatic
+var sortable = document.querySelectorAll('.sortable-automatic');
+Array.prototype.forEach.call(sortable, function(el, i) {
+    var mySortable = new Sortable(el);
+});
