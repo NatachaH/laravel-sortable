@@ -22,10 +22,13 @@ trait Sortable
      */
     protected static function bootSortable()
     {
-        // After an item is saved
+        // After an item is saved, if position is null set the next number
         static::creating(function ($model)
         {
-            $model->setNextPositionNumber();
+            if(is_null($model->position))
+            {
+              $model->setNextPositionNumber();
+            }
         });
 
     }
