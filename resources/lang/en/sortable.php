@@ -12,8 +12,9 @@ return [
     */
 
     'errors' => [
-      'model' => 'The model is missing. Check if you have set the data-sortable-model attribute.',
-      'id'    => 'The ids are missing. Check if you have set the data-id attributes.'
+      'model'         => 'The model is missing or doesn\'t exist.',
+      'id'            => 'The ids are missing.',
+      'not-sortable'  => 'The item is not sortable.'
     ],
 
     'success' => 'The positions have been updated.'

@@ -14,27 +14,31 @@ class SortableController extends Controller
      */
     public function __invoke(Request $request)
     {
-        // Get parameters
-        $model = new $request['model'];
-        $ids = $request['ids'];
 
-        // Return if no model
-        if(empty($model))
+        // Get parameters
+        $model  = $request['model'];
+        $ids    = $request['ids'];
+
+        // Abort if no model
+        if(empty($model) || !class_exists($model))
         {
-            return response()->json(array(
-                'status' => 'error',
-                'message' => __('sortable::sortable.errors.model')
-            ));
+            return response()->json(['message' => __('sortable::sortable.errors.model')], 500);
         }
 
-        // Return if no ids
+        // Abort if no ids
         if(empty($ids))
         {
-            return response()->json(array(
-                'status' => 'error',
-                'message' => __('sortable::sortable.errors.id')
-            ));
+            return response()->json(['message' => __('sortable::sortable.errors.id')], 500);
         }
+
+        // Abort if model not sortable
+        if(!in_array('Nh\Sortable\Traits\Sortable', class_uses($model)))
+        {
+            return response()->json(['message' => __('sortable::sortable.errors.not-sortable')], 500);
+        }
+
+        // Create a new model
+        $model = new $model;
 
         // Update the positions
         $startOrder = 1;
@@ -44,10 +48,7 @@ class SortableController extends Controller
         }
 
         // Response
-        $response = array(
-            'status'  => 'success',
-            'message' => __('sortable::sortable.success')
-        );
+        $response = array('message' => __('sortable::sortable.success'));
 
         // Return
         return response()->json($response);

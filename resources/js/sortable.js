@@ -59,7 +59,7 @@ window.SortableJs = require('sortablejs').default;
            }).then((response)=>{
                sortableObject.options.successCallback(response);
            }).catch((error)=>{
-               sortableObject.options.errorCallback(error);
+               sortableObject.options.errorCallback(error.response);
            });
        }
 
@@ -82,8 +82,11 @@ window.SortableJs = require('sortablejs').default;
   Sortable.prototype.getIds = function(items) {
       var ids = [];
       Array.prototype.forEach.call(items, function(el, i) {
-        var id = el.getAttribute('data-id');
-        ids.push(id);
+        if(el.hasAttribute('data-id'))
+        {
+          var id = el.getAttribute('data-id');
+          ids.push(id);
+        }
       });
       return ids;
   }

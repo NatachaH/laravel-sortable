@@ -12,8 +12,9 @@ return [
     */
 
     'errors' => [
-      'model' => 'Il manque le model. Verifiez que vous avez bien l\'attribut data-sortable-model.',
-      'id'    => 'Il manque les ids. Verifiez que vous avez bien mis les attributs data-id.'
+      'model'         => 'Le modèle est manquant ou n\'existe pas.',
+      'id'            => 'Les ids sont manquant.',
+      'not-sortable'  => 'L\'élément n\'est pas triable.'
     ],
 
     'success' => 'La position a été modifiée.'
