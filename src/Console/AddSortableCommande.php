@@ -82,7 +82,7 @@ class AddSortableCommand extends Command
         $new_database  = database_path('migrations/'.date('Y_m_d').'_000000_add_column_'.$this->pname.'_position_table.php');
         $this->copy_file($stub_database,$new_database);
 
-        // end
+        // End
         $this->info('The model '.$name.' is now sortable !');
     }
 

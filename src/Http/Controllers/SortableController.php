@@ -19,7 +19,7 @@ class SortableController extends Controller
         $model  = $request['model'];
         $ids    = $request['ids'];
 
-        // Abort if no model
+        // Abort if no model or if model doesn't exist
         if(empty($model) || !class_exists($model))
         {
             return response()->json(['message' => __('sortable::sortable.errors.model')], 500);
@@ -31,7 +31,7 @@ class SortableController extends Controller
             return response()->json(['message' => __('sortable::sortable.errors.id')], 500);
         }
 
-        // Abort if model not sortable
+        // Abort if model is not sortable
         if(!in_array('Nh\Sortable\Traits\Sortable', class_uses($model)))
         {
             return response()->json(['message' => __('sortable::sortable.errors.not-sortable')], 500);
@@ -47,7 +47,7 @@ class SortableController extends Controller
             $model->where('id', $id)->update(['position' => $startOrder++]);
         }
 
-        // Response
+        // Success response
         $response = array('message' => __('sortable::sortable.success'));
 
         // Return

@@ -92,9 +92,3 @@ window.SortableJs = require('sortablejs').default;
   }
 
 }());
-
-// Init the Sortable to each .sortable-automatic
-var sortable = document.querySelectorAll('.sortable-automatic');
-Array.prototype.forEach.call(sortable, function(el, i) {
-    var mySortable = new Sortable(el);
-});
