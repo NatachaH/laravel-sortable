@@ -18,6 +18,7 @@ class SortableController extends Controller
         // Get parameters
         $model  = $request['model'];
         $ids    = $request['ids'];
+        $order  = $request['order'];
 
         // Abort if no model or if model doesn't exist
         if(empty($model) || !class_exists($model))
@@ -37,15 +38,31 @@ class SortableController extends Controller
             return response()->json(['message' => __('sortable::sortable.errors.not-sortable')], 500);
         }
 
+        // If no order set, default is asc
+        if(empty($order) || in_array($order,['asc','desc']))
+        {
+            $order = 'asc';
+        }
+
         // Create a new model
         $model = new $model;
 
         // Update the positions
-        $startOrder = 1;
-        foreach ($ids as $id)
+        if($order == 'asc')
         {
-            $model->where('id', $id)->update(['position' => $startOrder++]);
+            $startOrder = 1;
+            foreach ($ids as $id)
+            {
+                $model->where('id', $id)->update(['position' => $startOrder++]);
+            }
+        } else {
+            $startOrder = count($ids);
+            foreach ($ids as $id)
+            {
+                $model->where('id', $id)->update(['position' => $startOrder--]);
+            }
         }
+
 
         // Success response
         $response = array('message' => __('sortable::sortable.success'));

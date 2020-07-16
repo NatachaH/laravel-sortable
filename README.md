@@ -51,11 +51,12 @@ new Sortable(el, {
 Then in your view, add the element:
 
 - On the parent, add the attribute **data-sortable-model**
+- On the parent, add the attribute **data-sortable-order** if you need to specify the order to rearanged
 - On the children, add the attribute **data-id**
 - On the children, add an element with class **.drag**
 
 ```
-<ul id="mySortable" data-sortable-mode="App\Model">
+<ul id="mySortable" data-sortable-mode="App\Model" data-sortable-order="desc">
   <li data-id="1"><span class="drag"></span> One</li>
   <li data-id="2"><span class="drag"></span> Two</li>
   <li data-id="3"><span class="drag"></span> Three</li>

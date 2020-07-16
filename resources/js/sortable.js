@@ -49,12 +49,14 @@ window.SortableJs = require('sortablejs').default;
            var url   = '/sortable/update';
            var model = this.el.getAttribute('data-sortable-model');
            var ids   = sortableObject.getIds(this.el.children);
+           var order = this.el.getAttribute('data-sortable-order');
            axios({
                method: 'post',
                url: url,
                data: {
                  'model' : model,
-                 'ids': ids
+                 'ids': ids,
+                 'order' : order
                }
            }).then((response)=>{
                sortableObject.options.successCallback(response);
