@@ -39,7 +39,7 @@ class SortableController extends Controller
         }
 
         // If no order set, default is asc
-        if(empty($order) || in_array($order,['asc','desc']))
+        if(empty($order) || !in_array($order,['asc','desc']))
         {
             $order = 'asc';
         }
