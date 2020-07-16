@@ -28,7 +28,7 @@ class SortableServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole())
         {
             $this->commands([
-                \Nh\Sortable\Commands\AddSortableCommand::class
+                \Nh\Sortable\Console\Commands\AddSortableCommand::class
             ]);
         }
 

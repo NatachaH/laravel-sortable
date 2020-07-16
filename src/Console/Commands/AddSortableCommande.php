@@ -1,6 +1,6 @@
 <?php
 
-namespace Nh\Sortable\Commands;
+namespace Nh\Sortable\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
