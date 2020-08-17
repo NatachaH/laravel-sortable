@@ -75,7 +75,7 @@ class AddSortableCommand extends Command
         $this->ucpname  = ucfirst($this->pname);
 
         // Copy the files
-        $stub = __DIR__.'/../../stubs/';
+        $stub = __DIR__.'/../../../stubs/';
 
         // Database
         $stub_database   = $stub.'database/migrations/0000_00_00_000000_add_column_model_position_table.php';
