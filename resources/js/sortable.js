@@ -83,7 +83,7 @@ window.SortableJs = require('sortablejs').default;
   // Get the ids in the new order
   Sortable.prototype.getIds = function(items) {
       var ids = [];
-      Array.prototype.forEach.call(items, function(el, i) {
+      items.forEach((el, i) => {
         if(el.hasAttribute('data-id'))
         {
           var id = el.getAttribute('data-id');
