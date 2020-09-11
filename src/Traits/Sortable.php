@@ -12,7 +12,18 @@ trait Sortable
      */
     public function initializeSortable()
     {
-        $this->fillable[] = 'position';
+
+        if(!array_key_exists('direction',$this->sortable))
+        {
+            $this->sortable['direction'] = 'asc';
+        }
+
+        if(!array_key_exists('field',$this->sortable))
+        {
+            $this->fillable[] = 'position';
+            $this->sortable['field'] = 'position';
+        }
+
     }
 
     /**
@@ -25,7 +36,7 @@ trait Sortable
         // After an item is saved, if position is null set the next number
         static::creating(function ($model)
         {
-            if(is_null($model->position))
+            if($this->sortable['field'] == 'position' && is_null($model->position))
             {
               $model->setNextPositionNumber();
             }
@@ -34,14 +45,32 @@ trait Sortable
     }
 
     /**
-     * Get model by position
-     * @param  Builder $query
-     * @param  string  $direction
-     * @return Builder $query
+     * Scope a query by position.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string $field
+     * @param  string $direction
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function scopeByPosition(Builder $query, string $direction = 'asc')
+    public function scopeByPosition(Builder $query, string $direction = 'asc')
     {
-        return $query->orderBy('position',$direction);
+        return $query->orderBy('position', $direction);
+    }
+
+    /**
+     * Scope a query by custome/default sortable.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string $field
+     * @param  string $direction
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSortable(Builder $query, string $field = null, string $direction = null)
+    {
+        $field = $field ?? $this->sortable['field'];
+        $direction = $direction ?? $this->sortable['direction'];
+        $direction = in_array($direction, ['asc','desc']) ? $direction : 'asc';
+        return $query->orderBy($field, $direction);
     }
 
     /**

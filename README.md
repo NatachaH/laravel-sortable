@@ -13,11 +13,18 @@ php artisan sortable:new {model? : the name of the model}
 ```
 
 Then, add the **Sortable** trait to your model:
+*The default sortable values are position by asc. The trait will add the position column to your $fillable array*
 
 ```
 use Nh\Sortable\Traits\Sortable;
 
 use Sortable;
+
+protected $sortable = [
+  'field' => 'position',
+  'direction' => 'asc'
+];
+
 ```
 
 # Javascript & View
@@ -69,6 +76,16 @@ You can get your model collection by the position:
 *You can pass the direction asc or desc*
 
 ```
-$model->ByPosition()
-$model->ByPosition('desc')
+$model->byPosition()
+$model->byPosition('desc')
+```
+
+# Get collection by sortable
+
+You can get your model collection by the sortable customer or default:
+*The values of your $sortable array will be take as default*
+
+```
+$model->sortable()
+$model->sortable('name','desc')
 ```
