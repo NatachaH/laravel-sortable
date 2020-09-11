@@ -20,6 +20,10 @@ use Nh\Sortable\Traits\Sortable;
 
 use Sortable;
 
+/**
+ * Default sortable field and direction.
+ * @var array
+ */
 protected $sortable = [
   'field' => 'position',
   'direction' => 'asc'

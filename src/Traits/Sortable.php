@@ -36,7 +36,7 @@ trait Sortable
         // After an item is saved, if position is null set the next number
         static::creating(function ($model)
         {
-            if($this->sortable['field'] == 'position' && is_null($model->position))
+            if($model->sortable['field'] == 'position' && is_null($model->position))
             {
               $model->setNextPositionNumber();
             }
