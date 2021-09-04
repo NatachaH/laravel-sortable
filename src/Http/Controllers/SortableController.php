@@ -4,7 +4,6 @@ namespace Nh\Sortable\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Nh\Sortable\Events\SortableEvent;
 
 class SortableController extends Controller
 {
@@ -68,7 +67,7 @@ class SortableController extends Controller
         $response = array('message' => __('sortable::sortable.success'));
 
         // Fire event
-        SortableEvent::dispatch('sorted', $model, count($ids));
+        $model->fireSortedEvent($ids);
 
         // Return
         return response()->json($response);

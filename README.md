@@ -31,6 +31,23 @@ protected $sortable = [
 
 ```
 
+In option you can fire an event on the 'parent' model.
+Exemple if you sort the Media model in a Page model
+
+```
+/**
+ * Default sortable field and direction.
+ * @var array
+ */
+protected $sortable = [
+  'field' => 'position',
+  'direction' => 'asc',
+  'event-on-parent' => true,
+  'parent' => 'mediable'
+];
+
+```
+
 # Javascript & View
 
 Add in your **package.json** the dependency:
@@ -100,5 +117,5 @@ You can use the **SortableEvent** for dispatch events that happen where sorted h
 *You can pass a name, the model, and the number of model affected*
 
 ```
-SortableEvent::dispatch('my-event', $model, 1);
+SortableEvent::dispatch('my-event', $model, $relation, 1);
 ```

@@ -3,6 +3,7 @@ namespace Nh\Sortable\Traits;
 
 use App;
 use Illuminate\Database\Eloquent\Builder;
+use Nh\Sortable\Events\SortableEvent;
 
 trait Sortable
 {
@@ -79,5 +80,30 @@ trait Sortable
     private function setNextPositionNumber()
     {
         $this->position = static::query()->max('position') + 1;
+    }
+
+    /**
+     * Fire the SortableEvent on model or on his parent
+     * @param  array $ids_updated
+     * @return void
+     */
+    public function fireSortedEvent($ids_updated)
+    {
+        // Get the number of model affected
+        $nbr = count($ids_updated);
+
+        if(array_key_exists('event-on-parent',$this->sortable) && array_key_exists('parent',$this->sortable) && $this->sortable['event-on-parent'])
+        {
+            // If the model should fire event on parent model
+            $model    = $this->firstWhere('id',$ids_updated[0]);
+            $parent   = $model[$this->sortable['parent']];
+            $relation = $this;
+
+            // Event set on parent
+            SortableEvent::dispatch('sorted', $parent, $relation, $nbr);
+        } else {
+            // Event set on model
+            SortableEvent::dispatch('sorted', $this, null, $nbr);
+        }
     }
 }

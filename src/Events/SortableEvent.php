@@ -16,10 +16,16 @@ class SortableEvent
     public $name;
 
     /**
-     * The model who has been sorted
+     * The model or the parent model
      * @var \Illuminate\Database\Eloquent\Model
      */
     public $model;
+
+    /**
+     * The model or null
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    public $relation;
 
     /**
      * The number of sorted model affected
@@ -27,15 +33,19 @@ class SortableEvent
      */
     public $number;
 
+
     /**
      * Create a new event instance.
      * @param string  $name
      * @param \Illuminate\Database\Eloquent\Model  $model
+     * @param \Illuminate\Database\Eloquent\Model $relation
+     * @param int  $number
      */
-    public function __construct($name,$model,$number = 1)
+    public function __construct($name,$model,$relation = null,$number = null)
     {
-          $this->name     = $name;
-          $this->model    = $model;
-          $this->number   = $number;
+        $this->name     = $name;
+        $this->model    = $model;
+        $this->relation = $relation;
+        $this->number   = $number;
     }
 }
