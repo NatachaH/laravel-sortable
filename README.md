@@ -93,3 +93,12 @@ You can get your model collection by the sortable customer or default:
 $model->sortable()
 $model->sortable('name','desc')
 ```
+
+# Events
+
+You can use the **SortableEvent** for dispatch events that happen where sorted happend.
+*You can pass a name, the model, and the number of model affected*
+
+```
+SortableEvent::dispatch('my-event', $model, 1);
+```
