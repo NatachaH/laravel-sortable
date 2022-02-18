@@ -19,6 +19,11 @@ trait Sortable
             $this->sortable['direction'] = 'asc';
         }
 
+        if(!array_key_exists('timestamp',$this->sortable))
+        {
+            $this->sortable['timestamp'] = true;
+        }
+
         if(!array_key_exists('field',$this->sortable))
         {
             $this->fillable[] = 'position';
@@ -80,6 +85,17 @@ trait Sortable
     private function setNextPositionNumber()
     {
         $this->position = static::query()->max('position') + 1;
+    }
+
+    /**
+     * Update the position and check if it required the timestamp update
+     * @param  int $number
+     */
+    public function updatePosition(int $number)
+    {
+        $this->timestamps = $this->sortable['timestamp'];
+        $this->position = $number;
+        $this->save();
     }
 
     /**

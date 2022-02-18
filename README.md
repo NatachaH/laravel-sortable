@@ -48,6 +48,22 @@ protected $sortable = [
 
 ```
 
+In option you can also update the timestamps or not (updated_at)
+By default it set to true
+
+```
+/**
+ * Default sortable field and direction.
+ * @var array
+ */
+protected $sortable = [
+  'field' => 'position',
+  'direction' => 'asc',
+  'timestamp' => true
+];
+
+```
+
 # Javascript & View
 
 Add in your **package.json** the dependency:

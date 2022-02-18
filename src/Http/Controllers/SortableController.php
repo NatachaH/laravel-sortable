@@ -44,23 +44,13 @@ class SortableController extends Controller
             $order = 'asc';
         }
 
-        // Create a new model
+        // Get model and update the position
         $model = new $model;
-
-        // Update the positions
-        if($order == 'asc')
+        $startOrder = $order == 'asc' ? 1 : count($ids);
+        foreach ($ids as $id)
         {
-            $startOrder = 1;
-            foreach ($ids as $id)
-            {
-                $model->where('id', $id)->update(['position' => $startOrder++]);
-            }
-        } else {
-            $startOrder = count($ids);
-            foreach ($ids as $id)
-            {
-                $model->where('id', $id)->update(['position' => $startOrder--]);
-            }
+            $number = $order == 'asc' ? $startOrder++ :$startOrder--;
+            $model->find($id)->updatePosition($number);
         }
 
         // Success response
