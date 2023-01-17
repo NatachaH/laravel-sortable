@@ -7,13 +7,13 @@
 |
 */
 
-window.SortableJs = require('sortablejs').default;
+import SortableJs from 'sortablejs';
 
 // DYNAMIC MODULE
 (function() {
 
   // Define the module
-  this.Sortable = function(el,options = null) {
+  window.Sortable = function(el,options = null) {
 
       // Variables
       this.el = null;

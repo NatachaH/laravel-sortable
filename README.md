@@ -75,7 +75,7 @@ Add in your **package.json** the dependency:
 And add in your JS file the Sortable script:
 
 ```
-require('../../vendor/nh/sortable/resources/js/sortable');
+import '../../vendor/nh/sortable/resources/js/sortable';
 ```
 
 Initialize the Sortable in your JS file.
