@@ -108,7 +108,7 @@ export default class Sortable {
 
     let ids = [];
 
-    items.forEach(el => {
+    Array.from(items).forEach(el => {
       if(el.hasAttribute('data-id'))
       {
         var id = el.getAttribute('data-id');
